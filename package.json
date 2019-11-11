@@ -1,0 +1,36 @@
+{
+  "name": "@jamessawle/request-context",
+  "version": "0.0.1",
+  "description": "Store data across the lifecycle of a request using CLS",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "author": "James Sawle <jamessawle@hotmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "rimraf lib/ && tsc",
+    "lint": "eslint 'src/**/*.{js,ts,tsx}'",
+    "lint:fix": "eslint 'src/**/*.{js,ts,tsx}' --fix",
+    "test": "jest",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.22",
+    "@typescript-eslint/eslint-plugin": "^2.7.0",
+    "@typescript-eslint/parser": "^2.7.0",
+    "eslint": "^6.6.0",
+    "eslint-config-prettier": "^6.5.0",
+    "eslint-plugin-prettier": "^3.1.1",
+    "husky": "^3.0.9",
+    "jest": "^24.9.0",
+    "prettier": "^1.19.1",
+    "rimraf": "^3.0.0",
+    "ts-jest": "^24.1.0",
+    "typescript": "^3.7.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run typecheck && npm run lint",
+      "pre-push": "npm run typecheck && npm run lint && npm test"
+    }
+  }
+}
