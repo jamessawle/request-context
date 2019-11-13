@@ -1,1 +1,6 @@
-export const add = (x: number, y: number): number => x + y;
+import { Context } from './Context';
+import { ClsContext } from './ClsContext';
+
+export const generateContext = (identifier: string): Context => new ClsContext(identifier);
+
+export { Context };
