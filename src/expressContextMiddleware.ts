@@ -1,4 +1,3 @@
-import { Context } from './Context';
 import { ClsContext } from './ClsContext';
 import { RequestHandler } from 'express';
 
@@ -11,29 +10,29 @@ export const REQUEST_KEY = 'express_request_key';
  */
 export const RESPONSE_KEY = 'express_response_key';
 
-interface ContextMiddlewareResult {
-    middleware: RequestHandler;
-    context: Context;
-}
-
-/**
- * This method creates a Context and binds it to the the Express RequestHandler chain, placing
- * references to the {Request} and {Response} objects within the Context.
- * the Context.
- *
- * @param {string} identifier - the unique identifier to apply to the Context
- * @returns - An object containing the Context and a middleware that binds the Context to the RequestHandler chain.
- */
-export const createContextMiddleware = (identifier: string): ContextMiddlewareResult => {
-    const context = new ClsContext(identifier);
-
-    const middleware: RequestHandler = (req, res, next): void => {
+export const createClsContextMiddleware = (context: ClsContext): RequestHandler => {
+    return (req, res, next): void => {
         context.bind(() => {
             context.set(REQUEST_KEY, req);
             context.set(RESPONSE_KEY, res);
             next();
         });
     };
+};
 
-    return { context, middleware };
+export const createMiddlewareWrapper = (delegate: RequestHandler, context: ClsContext): RequestHandler => (
+    req,
+    res,
+    next,
+): void => {
+    const data = context.toMap();
+
+    delegate(req, res, () => {
+        context.bind(() => {
+            for (const [key, value] of data.entries()) {
+                context.set(key, value);
+            }
+            next();
+        });
+    });
 };
