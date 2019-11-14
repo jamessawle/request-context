@@ -1,4 +1,3 @@
-import { Context } from './Context';
 import { ClsContext } from './ClsContext';
 import { v4 } from 'uuid';
 
@@ -8,7 +7,7 @@ describe('ClsContext', () => {
         `${reservedKeyword} is a reserved keyword for keys in the ClsContext implementation`,
     );
 
-    let context: Context;
+    let context: ClsContext;
 
     beforeEach(() => {
         context = new ClsContext(v4());
