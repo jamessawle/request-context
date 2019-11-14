@@ -2,6 +2,7 @@ import { strict as assert } from 'assert';
 import { Context } from './Context';
 import { RequestHandler } from 'express';
 import { createContextMiddleware, REQUEST_KEY, RESPONSE_KEY } from './expressContextMiddleware';
+import { middlewareWrapper } from './middlewareWrapper';
 
 let context: Context;
 
@@ -18,4 +19,4 @@ export const getMiddleware = (identifier: string): RequestHandler => {
     return middleware;
 };
 
-export { Context, REQUEST_KEY, RESPONSE_KEY };
+export { Context, REQUEST_KEY, RESPONSE_KEY, middlewareWrapper };
