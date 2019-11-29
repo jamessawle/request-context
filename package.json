@@ -10,6 +10,13 @@
     "type": "git",
     "url": "https://github.com/jamessawle/request-context.git"
   },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "lib",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "rimraf lib/ && tsc",
     "lint": "eslint 'src/**/*.{js,ts,tsx}'",
