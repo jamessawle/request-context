@@ -64,12 +64,30 @@ describe('expressContextMiddleware', () => {
             });
         });
 
+        it('should contain some number of elements if delegate does not affect context and errors', done => {
+            const expectedError = new Error('bob');
+            const delegate: RequestHandler = (_req, _res, next): void => next(expectedError);
+
+            context.bind(() => {
+                context.set('dummy', 'value');
+                const wrapperMiddleware = createMiddlewareWrapper(delegate, context);
+
+                wrapperMiddleware(request, response, (error?: Error) => {
+                    expect(context.size).toEqual(1);
+                    expect(context.get('dummy')).toEqual('value');
+                    expect(error).toBe(expectedError);
+                    done();
+                });
+            });
+        });
+
         it('should reset Context if middleware modifies any of the elements', done => {
             const key1 = 'dummy';
             const key2 = 'bob';
             const delegate: RequestHandler = (_req, _res, next): void => {
                 context.delete(key1);
                 context.set(key2, 'new value');
+                context.set('newKey', 'why are you here?');
                 next();
             };
 
@@ -84,6 +102,34 @@ describe('expressContextMiddleware', () => {
                     expect(context.get(key1)).toEqual('value');
                     expect(context.get(key2)).toEqual('original value');
                     expect(context.get('untouchedKey')).toEqual(42);
+                    done();
+                });
+            });
+        });
+
+        it('should reset Context if middleware modifies any of the elements and errors', done => {
+            const key1 = 'dummy';
+            const key2 = 'bob';
+            const expectedError = new Error('something went wrong');
+            const delegate: RequestHandler = (_req, _res, next): void => {
+                context.delete(key1);
+                context.set(key2, 'new value');
+                context.set('newKey', 'why are you here?');
+                next(expectedError);
+            };
+
+            context.bind(() => {
+                context.set(key1, 'value');
+                context.set(key2, 'original value');
+                context.set('untouchedKey', 42);
+                const wrapperMiddleware = createMiddlewareWrapper(delegate, context);
+
+                wrapperMiddleware(request, response, (error?: Error) => {
+                    expect(context.size).toEqual(3);
+                    expect(context.get(key1)).toEqual('value');
+                    expect(context.get(key2)).toEqual('original value');
+                    expect(context.get('untouchedKey')).toEqual(42);
+                    expect(error).toBe(expectedError);
                     done();
                 });
             });

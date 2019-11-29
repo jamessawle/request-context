@@ -1,3 +1,14 @@
+/**
+ * A Context is a generic untyped key-value store.
+ *
+ * This is a subset of the Map interface, with the idea being that more
+ * functionality may be added in the future to make this a full Map implementation.
+ *
+ * Implementations are allowed to make restrictions on certain keys and what
+ * there behaviour will be; this is to allow for the implmentations to use
+ * the same underlying data-store as the user's data, but for it not to be exposed
+ * to the caller. For the most part these however, should not affect the caller.
+ */
 export interface Context {
     /**
      * This method clears all data stored within the Context.
@@ -65,7 +76,10 @@ export interface Context {
     readonly size: number;
 
     /**
-     * Generates a copy of the Context in the form of a Map
+     * Generates a copy of the Context in the form of a Map.
+     *
+     * If a change is made to the Context after this method is called, the changes
+     * will NOT be replicated in the returned Map.
      *
      * @returns {Map<string, any>} - contents of the Context
      */

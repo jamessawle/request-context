@@ -1,6 +1,6 @@
 {
   "name": "@jamessawle/request-context",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Store data across the lifecycle of a request using CLS",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -42,7 +42,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "npm run typecheck && npm run lint",
-      "pre-push": "npm run typecheck && npm run lint && npm test"
+      "pre-push": "npm audit && npm run build && npm run lint && npm test"
     }
   }
 }

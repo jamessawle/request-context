@@ -2,7 +2,7 @@ import { ClsContext } from './ClsContext';
 import { v4 } from 'uuid';
 
 describe('ClsContext', () => {
-    const reservedKeyword = 'KEY_KEY';
+    const reservedKeyword = 'keys_key';
     const expectedError = new Error(
         `${reservedKeyword} is a reserved keyword for keys in the ClsContext implementation`,
     );
