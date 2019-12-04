@@ -1,5 +1,9 @@
 # Request Context
 
+![npm (scoped)](https://img.shields.io/npm/v/@jamessawle/request-context)
+[![CircleCI](https://circleci.com/gh/jamessawle/request-context/tree/master.svg?style=svg)](https://circleci.com/gh/jamessawle/request-context/tree/master)
+![GitHub](https://img.shields.io/github/license/jamessawle/request-context)
+
 This library provides a simple mechanism to store and retrieve data across the lifecycle of a request within Express, without having to pass objects around.
 
 ```javascript
